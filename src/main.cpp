@@ -2,6 +2,8 @@
 
 #include "WiFi.h"
 
+#include "cJSON.h"
+
 #include <BLEDevice.h>
 #include <BLE2902.h>
 
@@ -21,6 +23,10 @@ BLEDescriptor RX_Descriptor(BLEUUID((uint16_t)0x2901));                         
 BLECharacteristic TX_Characteristics("ab1adb06-6724-11e9-a923-1681be663d3e", BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE); // 发送字符串的特征值
 BLEDescriptor TX_Descriptor(BLEUUID((uint16_t)0x2902));                                                                                             // 发送字符串描述符
 
+std::string value;
+char *json_string;
+int cJsonParseEnd;
+
 bool connected_state = false; // 创建设备连接标识符
 
 class MyServerCallbacks : public BLEServerCallbacks // 创建连接和断开调用类
@@ -39,18 +45,11 @@ class MyCallbacks : public BLECharacteristicCallbacks
 {
 
   void onWrite(BLECharacteristic *pCharacteristic)
-  { // 写方法
-
-    std::string value = pCharacteristic->getValue(); // 接收值
-    if (value.length() > 0)
+  {                                      // 写方法
+    value = pCharacteristic->getValue(); // 接收值
+    if(value.empty())
     {
-      Serial.println("*********");
-      Serial.print("new string: ");
-      for (int i = 0; i < value.length(); i++) // 遍历输出字符串
-        Serial.print(value[i]);
 
-      Serial.println();
-      Serial.println("*********");
     }
   }
 };
@@ -69,14 +68,15 @@ void setup()
     delay(500);
     Serial.print(".");
   }
-  Serial.print("IP地址:");
+  Serial.print("IPv4 address:");
   Serial.println(WiFi.localIP());
 
-  BLEDevice::init(bleServer); // 初始化BLE客户端设备
-
+  BLEDevice::init(bleServer);                                 // 初始化BLE客户端设备
+  BLEDevice::setMTU(256);
   BLEServer *pServer = BLEDevice::createServer();             // BLEServer指针，创建Server
-  pServer->setCallbacks(new MyServerCallbacks());             // 设置连接和断开调用类
   BLEService *pService = pServer->createService(ServiceUUID); // BLEService指针，创建Service
+
+  pServer->setCallbacks(new MyServerCallbacks()); // 设置连接和断开调用类
 
   pService->addCharacteristic(&RX_Characteristics);
   RX_Descriptor.setValue("RX String");
@@ -98,29 +98,27 @@ void setup()
 
 void loop()
 {
-    Serial.print("IP Address:");
-  Serial.println(WiFi.localIP());
+  if (value.length() > 0)
+  {
+    json_string = (char*)value.data();
+    Serial.printf("json string: %s\r\n value: %s\r\n", json_string, value.c_str());
+    cJSON *root = cJSON_Parse(json_string);
+    if (root == NULL) {
+        Serial.printf("Error before: [%s]\n", cJSON_GetErrorPtr());
+    }
+    cJSON *cmd = cJSON_GetObjectItem(root, "cmd");
+    cJSON *idx = cJSON_GetObjectItem(root, "idx");
+    cJSON *ssid = cJSON_GetObjectItem(root, "ssid");
+
+    Serial.printf("cmd: %d\r\n", cmd->valueint);
+    Serial.printf("idx: %d\r\n", idx->valueint);
+    Serial.printf("ssid: %s\r\n", ssid->valuestring);
+
+    TX_Characteristics.setValue("received!");
+    TX_Characteristics.notify();
+    
+    cJSON_Delete(root);
+    value.clear();
+  }
   delay(500);
-  // Serial.println("连接服务器");
-  // if (client.connect(serverIP, serverPort)) // 我们连接服务器对应的IP地址和端口
-  // {
-  //   Serial.println("连接服务器成功");
-  //   while (client.connected() || client.available()) // 如果已连接，或有收到的未读取的数据
-  //   {
-  //     if (client.available()) // 如果有收到数据
-  //     {
-  //       readTCP = client.readString(); // 读取服务器发送的数据
-  //       Serial.println(readTCP);       // 串口输出服务器发送来的数据
-  //       readTCP = "";                  // 将接收到的字符清空
-  //     }
-  //   }
-  //   Serial.println("关闭当前连接");
-  //   client.stop(); // 关闭客户端
-  // }
-  // else
-  // {
-  //   Serial.println("连接服务器失败");
-  //   client.stop(); // 关闭客户端
-  // }
-  // delay(5000);
 }
