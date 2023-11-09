@@ -1,0 +1,94 @@
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: C:/Users/HP/Documents/PlatformIO/Projects/WIFI_BLE/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-hmeovt
+
+Run Build Command(s):C:/MinGW/bin/make.exe -f Makefile cmTC_3d8a5/fast && C:/MinGW/bin/make.exe  -f CMakeFiles\cmTC_3d8a5.dir\build.make CMakeFiles/cmTC_3d8a5.dir/build
+make.exe[1]: Entering directory 'C:/Users/HP/Documents/PlatformIO/Projects/WIFI_BLE/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-hmeovt'
+Building C object CMakeFiles/cmTC_3d8a5.dir/CMakeCCompilerABI.c.obj
+E:\Compiler\bin\arm-none-eabi-gcc.exe   -fdiagnostics-color=always   -v -o CMakeFiles\cmTC_3d8a5.dir\CMakeCCompilerABI.c.obj -c "E:\CLion\CLion 2022.3.2\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCCompilerABI.c"
+Using built-in specs.
+COLLECT_GCC=E:\Compiler\bin\arm-none-eabi-gcc.exe
+Target: arm-none-eabi
+Configured with: /mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/src/gcc/configure --build=x86_64-linux-gnu --host=i686-w64-mingw32 --target=arm-none-eabi --prefix=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw --libexecdir=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/lib --infodir=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/share/doc/gcc-arm-none-eabi/info --mandir=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/share/doc/gcc-arm-none-eabi/man --htmldir=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/share/doc/gcc-arm-none-eabi/html --pdfdir=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/share/doc/gcc-arm-none-eabi/pdf --enable-languages=c,c++ --enable-mingw-wildcard --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-gnu-as --with-gnu-ld --with-headers=yes --with-newlib --with-python-dir=share/gcc-arm-none-eabi --with-sysroot=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/arm-none-eabi --with-libiconv-prefix=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-gmp=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-mpfr=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-mpc=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-isl=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-libelf=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-pkgversion='GNU Arm Embedded Toolchain 10-2020-q4-major' --with-multilib-list=rmprofile,aprofile
+Thread model: single
+Supported LTO compression algorithms: zlib
+gcc version 10.2.1 20201103 (release) (GNU Arm Embedded Toolchain 10-2020-q4-major) 
+COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_3d8a5.dir\CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-march=armv4t'
+ e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/cc1.exe -quiet -v -iprefix e:\compiler\bin\../lib/gcc/arm-none-eabi/10.2.1/ -isysroot e:\compiler\bin\../arm-none-eabi -D__USES_INITFINI__ E:\CLion\CLion 2022.3.2\bin\cmake\win\x64\share\cmake-3.25\Modules\CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mcpu=arm7tdmi -mfloat-abi=soft -marm -march=armv4t -auxbase-strip CMakeFiles\cmTC_3d8a5.dir\CMakeCCompilerABI.c.obj -version -fdiagnostics-color=always -o C:\Users\HP\AppData\Local\Temp\ccvh3ADe.s
+GNU C17 (GNU Arm Embedded Toolchain 10-2020-q4-major) version 10.2.1 20201103 (release) (arm-none-eabi)
+	compiled by GNU C version 7.3-win32 20180312, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring duplicate directory "e:/compiler/lib/gcc/../../lib/gcc/arm-none-eabi/10.2.1/include"
+ignoring nonexistent directory "e:\compiler\bin\../arm-none-eabi/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/lib/gcc/arm-none-eabi/10.2.1/../../../../include"
+ignoring duplicate directory "e:/compiler/lib/gcc/../../lib/gcc/arm-none-eabi/10.2.1/include-fixed"
+ignoring duplicate directory "e:/compiler/lib/gcc/../../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/include"
+ignoring nonexistent directory "e:\compiler\bin\../arm-none-eabi/usr/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ e:\compiler\bin\../lib/gcc/arm-none-eabi/10.2.1/include
+ e:\compiler\bin\../lib/gcc/arm-none-eabi/10.2.1/include-fixed
+ e:\compiler\bin\../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/include
+End of search list.
+GNU C17 (GNU Arm Embedded Toolchain 10-2020-q4-major) version 10.2.1 20201103 (release) (arm-none-eabi)
+	compiled by GNU C version 7.3-win32 20180312, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+Compiler executable checksum: d0af1807fcd872df6b1165770acff16d
+COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_3d8a5.dir\CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-march=armv4t'
+ e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles\cmTC_3d8a5.dir\CMakeCCompilerABI.c.obj C:\Users\HP\AppData\Local\Temp\ccvh3ADe.s
+GNU assembler version 2.35.1 (arm-none-eabi) using BFD version (GNU Arm Embedded Toolchain 10-2020-q4-major) 2.35.1.20201028
+COMPILER_PATH=e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/;e:/compiler/bin/../lib/gcc/;e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/bin/
+LIBRARY_PATH=e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/;e:/compiler/bin/../lib/gcc/;e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/;e:/compiler/bin/../arm-none-eabi/lib/
+COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-v' '-o' 'CMakeFiles\cmTC_3d8a5.dir\CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-march=armv4t'
+Linking C executable cmTC_3d8a5.exe
+"E:\CLion\CLion 2022.3.2\bin\cmake\win\x64\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_3d8a5.dir\link.txt --verbose=1
+"E:\CLion\CLion 2022.3.2\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_3d8a5.dir/objects.a
+E:\Compiler\bin\arm-none-eabi-ar.exe qc CMakeFiles\cmTC_3d8a5.dir/objects.a @CMakeFiles\cmTC_3d8a5.dir\objects1
+E:\Compiler\bin\arm-none-eabi-gcc.exe  -v -Wl,--whole-archive CMakeFiles\cmTC_3d8a5.dir/objects.a -Wl,--no-whole-archive -o cmTC_3d8a5.exe -Wl,--out-implib,libcmTC_3d8a5.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
+Using built-in specs.
+COLLECT_GCC=E:\Compiler\bin\arm-none-eabi-gcc.exe
+COLLECT_LTO_WRAPPER=e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/lto-wrapper.exe
+Target: arm-none-eabi
+Configured with: /mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/src/gcc/configure --build=x86_64-linux-gnu --host=i686-w64-mingw32 --target=arm-none-eabi --prefix=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw --libexecdir=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/lib --infodir=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/share/doc/gcc-arm-none-eabi/info --mandir=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/share/doc/gcc-arm-none-eabi/man --htmldir=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/share/doc/gcc-arm-none-eabi/html --pdfdir=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/share/doc/gcc-arm-none-eabi/pdf --enable-languages=c,c++ --enable-mingw-wildcard --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-gnu-as --with-gnu-ld --with-headers=yes --with-newlib --with-python-dir=share/gcc-arm-none-eabi --with-sysroot=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/install-mingw/arm-none-eabi --with-libiconv-prefix=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-gmp=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-mpfr=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-mpc=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-isl=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-libelf=/mnt/workspace/workspace/GCC-10-pipeline/jenkins-GCC-10-pipeline-48_20201124_1606180641/build-mingw/host-libs/usr --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-pkgversion='GNU Arm Embedded Toolchain 10-2020-q4-major' --with-multilib-list=rmprofile,aprofile
+Thread model: single
+Supported LTO compression algorithms: zlib
+gcc version 10.2.1 20201103 (release) (GNU Arm Embedded Toolchain 10-2020-q4-major) 
+COMPILER_PATH=e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/;e:/compiler/bin/../lib/gcc/;e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/bin/
+LIBRARY_PATH=e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/;e:/compiler/bin/../lib/gcc/;e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/;e:/compiler/bin/../arm-none-eabi/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3d8a5.exe' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-march=armv4t'
+ e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/collect2.exe -plugin e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/liblto_plugin-0.dll -plugin-opt=e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/lto-wrapper.exe -plugin-opt=-fresolution=C:\Users\HP\AppData\Local\Temp\ccYJtJh1.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc --sysroot=e:\compiler\bin\../arm-none-eabi -X -o cmTC_3d8a5.exe e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/crti.o e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/crtbegin.o e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/crt0.o -Le:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1 -Le:/compiler/bin/../lib/gcc -Le:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib -Le:/compiler/bin/../arm-none-eabi/lib --whole-archive CMakeFiles\cmTC_3d8a5.dir/objects.a --no-whole-archive --out-implib libcmTC_3d8a5.dll.a --major-image-version 0 --minor-image-version 0 --start-group -lgcc -lc --end-group e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/crtend.o e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/crtn.o
+e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/bin/ld.exe: unrecognized option '--major-image-version'
+e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/bin/ld.exe: use the --help option for usage information
+collect2.exe: error: ld returned 1 exit status
+CMakeFiles\cmTC_3d8a5.dir\build.make:98: recipe for target 'cmTC_3d8a5.exe' failed
+make.exe[1]: *** [cmTC_3d8a5.exe] Error 1
+make.exe[1]: Leaving directory 'C:/Users/HP/Documents/PlatformIO/Projects/WIFI_BLE/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-hmeovt'
+Makefile:126: recipe for target 'cmTC_3d8a5/fast' failed
+make.exe: *** [cmTC_3d8a5/fast] Error 2
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: C:/Users/HP/Documents/PlatformIO/Projects/WIFI_BLE/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-y3vzbm
+
+Run Build Command(s):C:/MinGW/bin/make.exe -f Makefile cmTC_51961/fast && C:/MinGW/bin/make.exe  -f CMakeFiles\cmTC_51961.dir\build.make CMakeFiles/cmTC_51961.dir/build
+make.exe[1]: Entering directory 'C:/Users/HP/Documents/PlatformIO/Projects/WIFI_BLE/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-y3vzbm'
+Building C object CMakeFiles/cmTC_51961.dir/testCCompiler.c.obj
+E:\Compiler\bin\arm-none-eabi-gcc.exe   -fdiagnostics-color=always -o CMakeFiles\cmTC_51961.dir\testCCompiler.c.obj -c C:\Users\HP\Documents\PlatformIO\Projects\WIFI_BLE\cmake-build-debug\CMakeFiles\CMakeScratch\TryCompile-y3vzbm\testCCompiler.c
+Linking C executable cmTC_51961.exe
+"E:\CLion\CLion 2022.3.2\bin\cmake\win\x64\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_51961.dir\link.txt --verbose=1
+"E:\CLion\CLion 2022.3.2\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_51961.dir/objects.a
+E:\Compiler\bin\arm-none-eabi-ar.exe qc CMakeFiles\cmTC_51961.dir/objects.a @CMakeFiles\cmTC_51961.dir\objects1
+E:\Compiler\bin\arm-none-eabi-gcc.exe -Wl,--whole-archive CMakeFiles\cmTC_51961.dir/objects.a -Wl,--no-whole-archive -o cmTC_51961.exe -Wl,--out-implib,libcmTC_51961.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_51961.dir\linkLibs.rsp
+e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/bin/ld.exe: unrecognized option '--major-image-version'
+e:/compiler/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/bin/ld.exe: use the --help option for usage information
+collect2.exe: error: ld returned 1 exit status
+CMakeFiles\cmTC_51961.dir\build.make:99: recipe for target 'cmTC_51961.exe' failed
+make.exe[1]: *** [cmTC_51961.exe] Error 1
+make.exe[1]: Leaving directory 'C:/Users/HP/Documents/PlatformIO/Projects/WIFI_BLE/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-y3vzbm'
+Makefile:126: recipe for target 'cmTC_51961/fast' failed
+make.exe: *** [cmTC_51961/fast] Error 2
+
+
+
