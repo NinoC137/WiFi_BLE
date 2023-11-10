@@ -290,9 +290,14 @@ void cmd12(cJSON *root) // 服务器设置
         TX_Characteristics.notify();
         return;
     }
-    
+
     WiFi_Data.serverip = cmd_serverip->valuestring;
     WiFi_Data.serverport = cmd_serverport->valueint;
+
+    std::stringstream urlStream;
+    urlStream << "http://" << WiFi_Data.serverip << ":" << WiFi_Data.serverport;
+
+    http.begin(urlStream.str().c_str()); // 连接服务器对应域名
 
     cJSON *tx_root = cJSON_CreateObject();
     cJSON_AddItemToObject(tx_root, "res", cJSON_CreateNumber(0));
@@ -337,7 +342,7 @@ void cmd14(cJSON *root) // 心跳包设置
         TX_Characteristics.notify();
         return;
     }
-    
+
     HeartBeat.keepAliveTime = cmd_keepalivetime->valueint;
     HeartBeat.keepLiveCnt = cmd_keepalivecnt->valueint;
 
@@ -385,8 +390,19 @@ void cmd16() // 通过WiFi向服务器发送事件日志
     cJSON_AddItemToObject(tx_root, "time", cJSON_CreateString(ProjectData.time.c_str()));
     char *json_string = cJSON_Print(tx_root);
     // 生成完毕, 准备发送
-    TX_Characteristics.setValue(json_string);
-    TX_Characteristics.notify();
+    int httpCode = http.connected();
+    if (httpCode == true)
+    {
+        if (httpCode == HTTP_CODE_OK) // HTTP请求无异常
+        {
+            http.POST(json_string);
+        }
+    }
+    else
+    {
+        TX_Characteristics.setValue("http disconnected!");
+        TX_Characteristics.notify();
+    }
 #if DEBUG
     Serial.printf("%s\r\n", json_string);
 #endif // DEBUG

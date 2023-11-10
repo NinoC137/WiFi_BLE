@@ -31,8 +31,8 @@ public:
     std::string devID;
   };
 
-  std::string serverip;
-  int serverport;
+  std::string serverip = "iot.lyhctech.com";
+  int serverport = 6588;
 
   WiFiIndex WiFi_store[3];
 };

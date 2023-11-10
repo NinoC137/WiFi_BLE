@@ -24,8 +24,12 @@ void setup()
   }
 
   WiFi_BLE_setUp();
+  
+  std::stringstream urlStream;
+  urlStream << "http://" << WiFi_Data.serverip << ":" << WiFi_Data.serverport;
+  Serial.printf("Try to connect %s\r\n",urlStream.str().c_str());
 
-  // http.begin("http://iot.lyhctech.com:6588"); //连接服务器对应域名
+  http.begin(urlStream.str().c_str()); //连接服务器对应域名
 }
 
 void loop()
