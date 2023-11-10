@@ -16,19 +16,26 @@ std::string value;
 char *json_string;
 int cJsonParseEnd;
 
+// WiFi信息存储对象, 存储3个WiFi信息
 WiFiData WiFi_Data;
 // HTTP访问域名对象
 HTTPClient http;
+// 心跳包对象,存储心跳包在线时间与发送计数
+HeartBeatPacket HeartBeat;
+// 事件日志包, 存储各类信息
+ProjectDataPacket ProjectData;
 
 bool connected_state = false; // 创建设备连接标识符
 
 void MyServerCallbacks::Connected(BLEServer *pServer) // 开始连接函数
 {
     connected_state = true; // 设备正确连接
+    ProjectData.blestatus = true;
 }
 void MyServerCallbacks::Disconnected(BLEServer *pServer) // 断开连接函数
 {
     connected_state = false; // 设备连接错误
+    ProjectData.blestatus = false;
 }
 
 void MyCallbacks::onWrite(BLECharacteristic *pCharacteristic) // 写方法
@@ -39,13 +46,19 @@ void MyCallbacks::onWrite(BLECharacteristic *pCharacteristic) // 写方法
     }
 }
 
-void cmd1();
-void cmd2(cJSON *root);
-
 void WiFi_BLE_setUp()
 {
     WiFi_Data.WiFi_store[0].ipv4 = WiFi.localIP();
     WiFi_Data.WiFi_store[0].MacAddress = WiFi.macAddress();
+
+    if (WiFi_Data.WiFi_store[0].ipv4 != 0)
+    {
+        ProjectData.wifistatus = true;
+    }
+    else
+    {
+        ProjectData.wifistatus = false;
+    }
 
     Serial.print("IPv4 address:");
     Serial.println(WiFi_Data.WiFi_store[0].ipv4);
@@ -83,7 +96,7 @@ void BLEHandler()
     if (value.length() > 0)
     {
         json_string = (char *)value.data();
-        Serial.printf("json string: %s\r\n value: %s\r\n", json_string, value.c_str());
+        // Serial.printf("json string: %s\r\n value: %s\r\n", json_string, value.c_str());
         cJSON *root = cJSON_Parse(json_string);
         if (root == NULL)
         {
@@ -99,6 +112,51 @@ void BLEHandler()
             break;
         case 2:
             cmd2(root);
+            break;
+        case 3:
+            cmd3(root);
+            break;
+        case 4:
+            cmd4(root);
+            break;
+        case 5:
+            cmd5(root);
+            break;
+        case 6:
+            cmd6(root);
+            break;
+        case 7:
+            cmd7(root);
+            break;
+        case 8:
+            cmd8(root);
+            break;
+        case 9:
+            cmd9(root);
+            break;
+        case 10:
+            cmd10(root);
+            break;
+        case 12:
+            cmd12(root);
+            break;
+        case 13:
+            cmd13(root);
+            break;
+        case 14:
+            cmd14(root);
+            break;
+        case 15:
+            cmd15(root);
+            break;
+        case 16:
+            cmd16(root);
+            break;
+        case 17:
+            cmd17(root);
+            break;
+        case 19:
+            cmd19(root);
             break;
         default:
             Serial.printf("error cmd!\r\n");
@@ -127,18 +185,40 @@ void WiFiHandler()
     }
 }
 
-void cmd1()
+void ProjectDataUpdate()
 {
-    TX_Characteristics.setValue("received cmd:1");
-    TX_Characteristics.notify();
+    HeartBeatUpdate();
+    static int cnt_dataupdate;
+    if (ProjectData.switchStatus == 1)
+    {
+        cnt_dataupdate++;
+        if (cnt_dataupdate >= 200)
+        {
+            ProjectData.runTime += 5;
+            cnt_dataupdate = 0;
+        }
+    }
+    else
+    {
+        ProjectData.runTime = 0;
+    }
 }
 
-void cmd2(cJSON *root)
+void HeartBeatUpdate()
 {
-    TX_Characteristics.setValue("received cmd:2");
-    TX_Characteristics.notify();
-    cJSON *idx = cJSON_GetObjectItem(root, "idx");
-    cJSON *ssid = cJSON_GetObjectItem(root, "ssid");
-    Serial.printf("idx: %d\r\n", idx->valueint);
-    Serial.printf("ssid: %s\r\n", ssid->valuestring);
+    static int cnt_heartbeat;
+    char heartbeat_str[20];
+    if (HeartBeat.keepAliveTime != 0)
+    {
+        cnt_heartbeat++;
+        if (cnt_heartbeat >= HeartBeat.keepAliveTime / 5)
+        {
+            HeartBeat.keepLiveCnt++;
+            sprintf(heartbeat_str, "HeartBeat, cnt: %d", HeartBeat.keepLiveCnt);
+            TX_Characteristics.setValue(heartbeat_str);
+            TX_Characteristics.notify();
+
+            cnt_heartbeat = 0;
+        }
+    }
 }

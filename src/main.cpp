@@ -6,9 +6,9 @@ void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  
-  WiFi_Data.WiFi_store[0].SSID = (char*)STA_SSID;
-  WiFi_Data.WiFi_store[0].PassWord = (char*)STA_PASS;
+
+  WiFi_Data.WiFi_store[0].SSID = (char *)STA_SSID;
+  WiFi_Data.WiFi_store[0].PassWord = (char *)STA_PASS;
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(WiFi_Data.WiFi_store[0].SSID, WiFi_Data.WiFi_store[0].PassWord);
@@ -28,5 +28,7 @@ void loop()
 {
   BLEHandler();
   WiFiHandler();
-  delay(500);
+  ProjectDataUpdate();
+
+  delay(5);
 }
