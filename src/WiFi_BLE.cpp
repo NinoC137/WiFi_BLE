@@ -7,13 +7,13 @@ uint16_t serverPort = 8888;
 String readTCP;
 
 BLEUUID ServiceUUID("ab1ad444-6724-11e9-a923-1681be663d3e");                                                                                        // 服务的UUID
-BLECharacteristic RX_Characteristics("ab1ad980-6724-11e9-a923-1681be663d3e", BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE); // 接收字符串的特征值
+BLECharacteristic RX_Characteristics("ab1ad980-6724-11e9-a923-1681be663d3e", BLECharacteristic::PROPERTY_WRITE); // 接收字符串的特征值
 BLEDescriptor RX_Descriptor(BLEUUID((uint16_t)0x2901));                                                                                             // 接收字符串描述符
-BLECharacteristic TX_Characteristics("ab1adb06-6724-11e9-a923-1681be663d3e", BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE); // 发送字符串的特征值
+BLECharacteristic TX_Characteristics("ab1adb06-6724-11e9-a923-1681be663d3e", BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY); // 发送字符串的特征值
 BLEDescriptor TX_Descriptor(BLEUUID((uint16_t)0x2902));                                                                                             // 发送字符串描述符
 
 std::string value;
-char *json_string;
+char *BLE_json_stringRoot;
 int cJsonParseEnd;
 
 // WiFi信息存储对象, 存储3个WiFi信息
@@ -25,17 +25,27 @@ HeartBeatPacket HeartBeat;
 // 事件日志包, 存储各类信息
 ProjectDataPacket ProjectData;
 
+//-----------网络时间获取-----------//
+const char *ntpServer = "pool.ntp.org"; // 网络时间服务器
+// 时区设置函数，东八区（UTC/GMT+8:00）写成8*3600
+int my_timezone = 8;
+long gmtOffset_sec = my_timezone * 3600;
+const int daylightOffset_sec = 0; // 夏令时填写3600，否则填0
+struct tm timeinfo;
+
 bool connected_state = false; // 创建设备连接标识符
 
 void MyServerCallbacks::Connected(BLEServer *pServer) // 开始连接函数
 {
     connected_state = true; // 设备正确连接
     ProjectData.blestatus = true;
+    pServer->updatePeerMTU(0, 256);
 }
 void MyServerCallbacks::Disconnected(BLEServer *pServer) // 断开连接函数
 {
     connected_state = false; // 设备连接错误
     ProjectData.blestatus = false;
+    pServer->startAdvertising();
 }
 
 void MyCallbacks::onWrite(BLECharacteristic *pCharacteristic) // 写方法
@@ -49,7 +59,15 @@ void MyCallbacks::onWrite(BLECharacteristic *pCharacteristic) // 写方法
 void WiFi_BLE_setUp()
 {
     WiFi_Data.WiFi_store[0].ipv4 = WiFi.localIP();
-    WiFi_Data.WiFi_store[0].MacAddress = WiFi.macAddress();
+    WiFi_Data.WiFi_store[0].MacAddress = WiFi.macAddress().c_str();
+    WiFi_Data.WiFi_store[0].devID = WiFi_Data.WiFi_store[0].MacAddress;
+
+    size_t pos = WiFi_Data.WiFi_store[0].devID.find(":");
+    while (pos != std::string::npos)
+    {
+        WiFi_Data.WiFi_store[0].devID.erase(pos, 1);
+        pos = WiFi_Data.WiFi_store[0].devID.find(":");
+    }
 
     if (WiFi_Data.WiFi_store[0].ipv4 != 0)
     {
@@ -63,11 +81,15 @@ void WiFi_BLE_setUp()
     Serial.print("IPv4 address:");
     Serial.println(WiFi_Data.WiFi_store[0].ipv4);
     Serial.print("Mac:");
-    Serial.println(WiFi_Data.WiFi_store[0].MacAddress);
+    Serial.printf("%s\r\n",WiFi_Data.WiFi_store[0].MacAddress.c_str());
+    Serial.print("devID:");
+    Serial.printf("%s\r\n",WiFi_Data.WiFi_store[0].devID.c_str());
+
+    configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
 
     BLEDevice::init(bleServer); // 初始化BLE客户端设备
-    BLEDevice::setMTU(256);
     BLEServer *pServer = BLEDevice::createServer();             // BLEServer指针，创建Server
+    BLEDevice::setMTU(256);
     BLEService *pService = pServer->createService(ServiceUUID); // BLEService指针，创建Service
 
     pServer->setCallbacks(new MyServerCallbacks()); // 设置连接和断开调用类
@@ -92,12 +114,12 @@ void WiFi_BLE_setUp()
 
 void BLEHandler()
 {
-    // 蓝牙信息处理部分  --  注意手机发送端的MTU应设置为256(反正不要是默认的23字节,json包发不过去)
+    // 蓝牙信息处理部分  --  注意手机发送端的MTU应设置为256(反正不要是默认的23字节,json包发不过去也读不回来)
     if (value.length() > 0)
     {
-        json_string = (char *)value.data();
+        BLE_json_stringRoot = (char *)value.data();
         // Serial.printf("json string: %s\r\n value: %s\r\n", json_string, value.c_str());
-        cJSON *root = cJSON_Parse(json_string);
+        cJSON *root = cJSON_Parse(BLE_json_stringRoot);
         if (root == NULL)
         {
             Serial.printf("Error before: [%s]\n", cJSON_GetErrorPtr());
@@ -188,6 +210,7 @@ void WiFiHandler()
 void ProjectDataUpdate()
 {
     HeartBeatUpdate();
+    updateLocalTime();
     static int cnt_dataupdate;
     if (ProjectData.switchStatus == 1)
     {
@@ -220,5 +243,22 @@ void HeartBeatUpdate()
 
             cnt_heartbeat = 0;
         }
+    }
+}
+
+void updateLocalTime()
+{
+    configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+    if (!getLocalTime(&timeinfo))
+    {
+        ProjectData.time = std::string("Failed to obtain time");
+        return;
+    }
+    else
+    {
+        char time_str[64];
+        sprintf(time_str, "%04d-%02d-%02d %02d:%02d:%02d", timeinfo.tm_year + 1900, timeinfo.tm_mon + 1, timeinfo.tm_mday,
+                timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+        ProjectData.time = std::string(time_str);
     }
 }

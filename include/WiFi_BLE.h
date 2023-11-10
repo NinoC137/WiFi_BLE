@@ -25,11 +25,13 @@ public:
     int idx;
     char* SSID;
     char* PassWord;
+    char* devType = (char*)"esp32";
     IPAddress ipv4;
-    String MacAddress;
+    std::string MacAddress;
+    std::string devID;
   };
 
-  char* serverip;
+  std::string serverip;
   int serverport;
 
   WiFiIndex WiFi_store[3];
@@ -53,7 +55,7 @@ public:
   int worktime; //单位为秒
   int runTime;  //单位为秒
 
-  char* device_ID;
+  std::string device_ID;
 };
 
 class MyServerCallbacks : public BLEServerCallbacks // 创建连接和断开调用类
@@ -77,6 +79,10 @@ extern String readTCP;
 extern HeartBeatPacket HeartBeat;
 extern ProjectDataPacket ProjectData;
 
+extern int my_timezone;
+extern long gmtOffset_sec;
+extern struct tm timeinfo;
+
 extern std::string value;
 extern char *json_string;
 extern int cJsonParseEnd;
@@ -92,5 +98,7 @@ void BLEHandler();
 void WiFiHandler();
 void ProjectDataUpdate();
 void HeartBeatUpdate();
+
+void updateLocalTime();
 
 #endif // !_WIFI_BLE_H
