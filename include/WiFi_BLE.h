@@ -39,7 +39,7 @@ public:
 
 class HeartBeatPacket{  //心跳包
 public:
-  long keepAliveTime;
+  long keepAliveTime = 100;
   long keepLiveCnt;
 };
 

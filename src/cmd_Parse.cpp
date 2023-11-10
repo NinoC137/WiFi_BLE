@@ -373,7 +373,7 @@ void cmd15(cJSON *root) // 读取心跳包设置
     free(json_string);
 }
 
-void cmd16(cJSON *root) // 通过WiFi向服务器发送事件日志
+void cmd16() // 通过WiFi向服务器发送事件日志
 {
     cJSON *tx_root = cJSON_CreateObject();
     cJSON_AddItemToObject(tx_root, "device_id", cJSON_CreateString(ProjectData.device_ID.c_str()));
@@ -394,7 +394,7 @@ void cmd16(cJSON *root) // 通过WiFi向服务器发送事件日志
     free(json_string);
 }
 
-void cmd17(cJSON *root) // 通过蓝牙向宿主机发送事件日志
+void cmd17() // 通过蓝牙向宿主机发送事件日志
 {
     cJSON *tx_root = cJSON_CreateObject();
     cJSON_AddItemToObject(tx_root, "device_id", cJSON_CreateString(ProjectData.device_ID.c_str()));

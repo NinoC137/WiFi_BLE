@@ -166,10 +166,10 @@ void BLEHandler()
             cmd15(root);
             break;
         case 16:
-            cmd16(root);
+            cmd16();
             break;
         case 17:
-            cmd17(root);
+            cmd17();
             break;
         case 19:
             cmd19(root);
@@ -229,12 +229,10 @@ void HeartBeatUpdate()
     if (HeartBeat.keepAliveTime != 0)
     {
         cnt_heartbeat++;
-        if (cnt_heartbeat >= HeartBeat.keepAliveTime / 5)
+        if (cnt_heartbeat >= HeartBeat.keepAliveTime * 200) // 5ms cnt+1 所以keepAliveTime * 200放缩后对应毫秒级的单位
         {
             HeartBeat.keepLiveCnt++;
-            sprintf(heartbeat_str, "HeartBeat, cnt: %d", HeartBeat.keepLiveCnt);
-            TX_Characteristics.setValue(heartbeat_str);
-            TX_Characteristics.notify();
+            cmd17();
 
             cnt_heartbeat = 0;
         }
