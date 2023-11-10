@@ -33,21 +33,15 @@ long gmtOffset_sec = my_timezone * 3600;
 const int daylightOffset_sec = 0; // 夏令时填写3600，否则填0
 struct tm timeinfo;
 
-bool connected_state = false; // 创建设备连接标识符
-
-void MyServerCallbacks::Connected(BLEServer *pServer) // 开始连接函数
+void MyServerCallbacks::onConnect(BLEServer *pServer) // 开始连接函数
 {
-    connected_state = true; // 设备正确连接
     ProjectData.blestatus = true;
-    pServer->updatePeerMTU(0, 256);
 }
-void MyServerCallbacks::Disconnected(BLEServer *pServer) // 断开连接函数
+void MyServerCallbacks::onDisconnect(BLEServer *pServer) // 断开连接函数
 {
-    connected_state = false; // 设备连接错误
     ProjectData.blestatus = false;
-    pServer->startAdvertising();
+    pServer->getAdvertising()->start();
 }
-
 void MyCallbacks::onWrite(BLECharacteristic *pCharacteristic) // 写方法
 {
     value = pCharacteristic->getValue(); // 接收值
@@ -212,18 +206,19 @@ void ProjectDataUpdate()
     HeartBeatUpdate();
     updateLocalTime();
     static int cnt_dataupdate;
+
+    if(ProjectData.runTime >= ProjectData.worktime){
+        ProjectData.switchStatus = 0;
+    }
+
     if (ProjectData.switchStatus == 1)
     {
         cnt_dataupdate++;
-        if (cnt_dataupdate >= 200)
+        if (cnt_dataupdate >= 200)  //延时5ms的话, 计数200次为+1秒
         {
-            ProjectData.runTime += 5;
+            ProjectData.runTime += 1;
             cnt_dataupdate = 0;
         }
-    }
-    else
-    {
-        ProjectData.runTime = 0;
     }
 }
 

@@ -61,8 +61,8 @@ public:
 class MyServerCallbacks : public BLEServerCallbacks // 创建连接和断开调用类
 {
 public:
-  void Connected(BLEServer *pServer); // 开始连接函数
-  void Disconnected(BLEServer *pServer); // 断开连接函数
+  void onConnect(BLEServer *pServer); // 开始连接函数
+  void onDisconnect(BLEServer *pServer); // 断开连接函数
 };
 
 class MyCallbacks : public BLECharacteristicCallbacks
@@ -93,7 +93,7 @@ extern BLEDescriptor RX_Descriptor;
 extern BLECharacteristic TX_Characteristics;
 extern BLEDescriptor TX_Descriptor;
 
-void WiFi_BLE_setUp();
+void WiFi_BLE_setUp();  //在WiFi开启之后调用此函数
 void BLEHandler();
 void WiFiHandler();
 void ProjectDataUpdate();

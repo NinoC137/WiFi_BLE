@@ -105,6 +105,11 @@ void cmd4(cJSON *root) // 启/停设备
         TX_Characteristics.notify();
         return;
     }
+
+    ProjectData.switchStatus = cmd_switch->valueint;
+    ProjectData.worktime = cmd_worktime->valueint;
+    ProjectData.runTime = 0;
+
     cJSON *tx_root = cJSON_CreateObject();
     cJSON_AddItemToObject(tx_root, "res", cJSON_CreateNumber(0));
     cJSON_AddItemToObject(tx_root, "cmd", cJSON_CreateNumber(4));
@@ -238,6 +243,7 @@ void cmd9(cJSON *root) // 设置设备工作时长
     ProjectData.worktime = cmd_worktime->valueint;
     ProjectData.speed = cmd_speed->valueint;
     ProjectData.temp = cmd_temp->valueint;
+    ProjectData.runTime = 0;
 
     cJSON *tx_root = cJSON_CreateObject();
     cJSON_AddItemToObject(tx_root, "res", cJSON_CreateNumber(0));
