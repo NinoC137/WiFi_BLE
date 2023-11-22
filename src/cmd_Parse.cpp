@@ -381,7 +381,8 @@ void cmd15(cJSON *root) // 读取心跳包设置
 void cmd16() // 通过WiFi向服务器发送事件日志
 {
     cJSON *tx_root = cJSON_CreateObject();
-    cJSON_AddItemToObject(tx_root, "device_id", cJSON_CreateString(ProjectData.device_ID.c_str()));
+    // cJSON_AddItemToObject(tx_root, "device_id", cJSON_CreateString(ProjectData.device_ID.c_str()));
+    cJSON_AddItemToObject(tx_root, "device_id", cJSON_CreateString(WiFi_Data.WiFi_store[0].devID.c_str()));
     cJSON_AddItemToObject(tx_root, "blestatus", cJSON_CreateNumber(ProjectData.blestatus));
     cJSON_AddItemToObject(tx_root, "wifistatus", cJSON_CreateNumber(ProjectData.wifistatus));
     cJSON_AddItemToObject(tx_root, "switch", cJSON_CreateNumber(ProjectData.switchStatus));

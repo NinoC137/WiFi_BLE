@@ -16,6 +16,7 @@ std::string value;
 char *BLE_json_root;
 char *WiFi_json_root;
 int cJsonParseEnd;
+int CRC_CHECKED = 1;
 
 // WiFi信息存储对象, 存储3个WiFi信息
 WiFiData WiFi_Data;
@@ -136,10 +137,26 @@ void BLEHandler()
             cmd4(root);
             break;
         case 5:
-            cmd5(root);
+            if (CRC_CHECKED == 1)
+            {
+                cmd5(root);
+            }
+            else
+            {
+                TX_Characteristics.setValue("CRC NOT PASS!");
+                TX_Characteristics.notify();
+            }
             break;
         case 6:
-            cmd6(root);
+            if (CRC_CHECKED == 1)
+            {
+                cmd6(root);
+            }
+            else
+            {
+                TX_Characteristics.setValue("CRC NOT PASS!");
+                TX_Characteristics.notify();
+            }
             break;
         case 7:
             cmd7(root);
@@ -148,19 +165,43 @@ void BLEHandler()
             cmd8(root);
             break;
         case 9:
-            cmd9(root);
+            if (CRC_CHECKED == 1)
+            {
+                cmd9(root);
+            }
+            else
+            {
+                TX_Characteristics.setValue("CRC NOT PASS!");
+                TX_Characteristics.notify();
+            }
             break;
         case 10:
             cmd10(root);
             break;
         case 12:
-            cmd12(root);
+            if (CRC_CHECKED == 1)
+            {
+                cmd12(root);
+            }
+            else
+            {
+                TX_Characteristics.setValue("CRC NOT PASS!");
+                TX_Characteristics.notify();
+            }
             break;
         case 13:
             cmd13(root);
             break;
         case 14:
-            cmd14(root);
+            if (CRC_CHECKED == 1)
+            {
+                cmd14(root);
+            }
+            else
+            {
+                TX_Characteristics.setValue("CRC NOT PASS!");
+                TX_Characteristics.notify();
+            }
             break;
         case 15:
             cmd15(root);
@@ -221,10 +262,28 @@ void WiFiHandler()
                 cmd4(root);
                 break;
             case 5:
-                cmd5(root);
+                if (CRC_CHECKED == 1)
+                {
+                    cmd5(root);
+                }
+                else
+                {
+                    http.POST("CRC NOT PASS!");
+                    TX_Characteristics.setValue("CRC NOT PASS!");
+                    TX_Characteristics.notify();
+                }
                 break;
             case 6:
-                cmd6(root);
+                if (CRC_CHECKED == 1)
+                {
+                    cmd6(root);
+                }
+                else
+                {
+                    http.POST("CRC NOT PASS!");
+                    TX_Characteristics.setValue("CRC NOT PASS!");
+                    TX_Characteristics.notify();
+                }
                 break;
             case 7:
                 cmd7(root);
@@ -233,19 +292,46 @@ void WiFiHandler()
                 cmd8(root);
                 break;
             case 9:
-                cmd9(root);
+                if (CRC_CHECKED == 1)
+                {
+                    cmd9(root);
+                }
+                else
+                {
+                    http.POST("CRC NOT PASS!");
+                    TX_Characteristics.setValue("CRC NOT PASS!");
+                    TX_Characteristics.notify();
+                }
                 break;
             case 10:
                 cmd10(root);
                 break;
             case 12:
-                cmd12(root);
+                if (CRC_CHECKED == 1)
+                {
+                    cmd12(root);
+                }
+                else
+                {
+                    http.POST("CRC NOT PASS!");
+                    TX_Characteristics.setValue("CRC NOT PASS!");
+                    TX_Characteristics.notify();
+                }
                 break;
             case 13:
                 cmd13(root);
                 break;
             case 14:
-                cmd14(root);
+                if (CRC_CHECKED == 1)
+                {
+                    cmd14(root);
+                }
+                else
+                {
+                    http.POST("CRC NOT PASS!");
+                    TX_Characteristics.setValue("CRC NOT PASS!");
+                    TX_Characteristics.notify();
+                }
                 break;
             case 15:
                 cmd15(root);
@@ -261,7 +347,7 @@ void WiFiHandler()
                 break;
             default:
                 Serial.printf("error cmd!\r\n");
-                
+
                 http.POST(post_Payload.c_str());
                 break;
             }

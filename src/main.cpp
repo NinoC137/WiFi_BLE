@@ -35,7 +35,7 @@ void setup()
 void loop()
 {
   BLEHandler();
-  WiFiHandler();
+  // WiFiHandler();
   ProjectDataUpdate();
 
   delay(5);

@@ -84,8 +84,8 @@ extern long gmtOffset_sec;
 extern struct tm timeinfo;
 
 extern std::string value;
-extern char *json_string;
 extern int cJsonParseEnd;
+extern int CRC_CHECKED;
 
 extern BLEUUID ServiceUUID;
 extern BLECharacteristic RX_Characteristics;
