@@ -10,6 +10,7 @@
 
 #include "cJSON.h"
 #include "cmd_Parse.h"
+#include "MD5Builder.h"
 
 #include <BLEDevice.h>
 #include <BLE2902.h>
@@ -56,6 +57,8 @@ public:
   int runTime;  //单位为秒
 
   std::string device_ID;
+
+  std::string old_CRC;
 };
 
 class MyServerCallbacks : public BLEServerCallbacks // 创建连接和断开调用类

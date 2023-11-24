@@ -16,7 +16,7 @@ std::string value;
 char *BLE_json_root;
 char *WiFi_json_root;
 int cJsonParseEnd;
-int CRC_CHECKED = 1;
+int CRC_CHECKED = 0;
 
 // WiFi信息存储对象, 存储3个WiFi信息
 WiFiData WiFi_Data;
@@ -26,6 +26,9 @@ HTTPClient http;
 HeartBeatPacket HeartBeat;
 // 事件日志包, 存储各类信息
 ProjectDataPacket ProjectData;
+//CRC+MD5校验信息
+char md5CRC[32] = {0};
+MD5Builder md5Check;
 
 //-----------网络时间获取-----------//
 const char *ntpServer = "pool.ntp.org"; // 网络时间服务器
@@ -73,6 +76,15 @@ void WiFi_BLE_setUp()
     {
         ProjectData.wifistatus = false;
     }
+
+    //生成初始CRC值
+    sprintf(md5CRC, "%sOhz8Eese", WiFi_Data.WiFi_store[0].devID);
+    md5Check.begin();
+    md5Check.add((uint8_t *)md5CRC, strlen(md5CRC));
+    md5Check.calculate();
+    char key_crc[64] = {0};
+    md5Check.getChars(key_crc);
+    ProjectData.old_CRC = std::string(key_crc);
 
     Serial.print("IPv4 address:");
     Serial.println(WiFi_Data.WiFi_store[0].ipv4);
@@ -212,6 +224,9 @@ void BLEHandler()
         case 17:
             cmd17();
             break;
+        case 18:
+            cmd18(root);
+            break;
         case 19:
             cmd19(root);
             break;
@@ -341,6 +356,9 @@ void WiFiHandler()
                 break;
             case 17:
                 cmd17();
+                break;
+            case 18:
+                cmd18(root);
                 break;
             case 19:
                 cmd19(root);
